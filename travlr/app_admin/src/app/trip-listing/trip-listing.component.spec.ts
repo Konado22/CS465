@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CommonModule } from '@angular/common';
 import { TripListingComponent } from './trip-listing.component';
 
 describe('TripListingComponent', () => {
@@ -8,7 +8,7 @@ describe('TripListingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TripListingComponent]
+      imports: [CommonModule,TripListingComponent]
     })
     .compileComponents();
 

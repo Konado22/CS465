@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Injectable, Inject } from '@angular/core';
+import { User } from '../models/user';
+import { AuthResponse } from '../models/authresponse';
+import { BROWSER_STORAGE } from '../storage';
 import { Trip } from '../models/trip';
+import {HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +12,42 @@ import { Trip } from '../models/trip';
 export class TripDataService {
 //data service to manage calls to server for front end to utilize
   constructor(private http: HttpClient) {}
-  url = 'http://localhost:3000/api/trips';
+  baseUrl = 'http://localhost:3000/api/trips';
+  tripUrl =`${this.baseUrl}trips/`;
+
 
   getTrips() : Observable<Trip[]> {
 
-    return this.http.get<Trip[]>(this.url);
+    return this.http.get<Trip[]>(this.baseUrl);
   }
 //get trips returns all trips
   addTrip (formData: Trip) : Observable<Trip> {
-    return this.http.post<Trip>(this.url, formData);
+    return this.http.post<Trip>(this.baseUrl, formData);
   }
 //addtrip returns a new trip in the collection
   getTrip(tripCode: string) : Observable<Trip[]> {
-    return this.http.get<Trip[]>(this.url + '/' + tripCode);
+    return this.http.get<Trip[]>(this.baseUrl + '/' + tripCode);
   }
 //gettrip by id
   updateTrip(formData: Trip) : Observable<Trip> {
-    return this.http.put<Trip>(this.url + '/' + formData.code, formData);
+    return this.http.put<Trip>(this.baseUrl + '/' + formData.code, formData);
   }
-//update trip by id
+  private handleError(error:any) : Promise<AuthResponse> {
+    console.error("somethinghasgonewrong");
+    return Promise.reject(error.message || error);
+  }
+  login(user: User): Promise<AuthResponse> {
+    return this.makeAuthAPICall('login', user);
+  }
+
+  // Call to our /register endpoint, creates user and returns JWT
+  register(user: User): Promise<AuthResponse> {
+    return this.makeAuthAPICall('register', user);
+  }
+
+  // Helper method to process both login and register methods
+  private makeAuthAPICall(endpoint: string, user: User): any  {
+    const url: string = `${this.baseUrl}/`;
+    
+  }
 }

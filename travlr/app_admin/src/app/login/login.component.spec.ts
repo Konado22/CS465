@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { EditTripComponent } from './edit-trip.component';
+import { LoginComponent } from './login.component';
 
-describe('EditTripComponent', () => {
-  let component: EditTripComponent;
-  let fixture: ComponentFixture<EditTripComponent>;
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule,EditTripComponent]
+      imports: [CommonModule,LoginComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditTripComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

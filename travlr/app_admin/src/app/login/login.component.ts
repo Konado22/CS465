@@ -42,17 +42,11 @@ export class LoginComponent implements OnInit {
   }
 
   private doLogin(): void {
-    let Newuser : User= {
-      name: this.credentials.name,
-      email: this.credentials.email
-    } as User;
-    
-    this.authenticationService.login(Newuser).then(() => this.router.navigateByUrl('#'))
-    .catch((message: string) => this.formError = message)
+    this.authenticationService.login(this.credentials)
+    .then(() => this.router.navigateByUrl('#'))
+    .catch((message) => this.formError = message)
   }
 
-  private saveToken(token: string): void {
-    localStorage.setItem('travlr-token', token);
-  }
+ 
 }
 

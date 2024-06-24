@@ -12,25 +12,25 @@ import { Observable } from 'rxjs';
 export class TripDataService {
 //data service to manage calls to server for front end to utilize
   constructor(private http: HttpClient) {}
-  baseUrl = 'http://localhost:3000/api/trips';
+  baseUrl = 'http://localhost:3000/api/';
   tripUrl =`${this.baseUrl}trips/`;
 
 
   getTrips() : Observable<Trip[]> {
 
-    return this.http.get<Trip[]>(this.baseUrl);
+    return this.http.get<Trip[]>(this.tripUrl);
   }
 //get trips returns all trips
   addTrip (formData: Trip) : Observable<Trip> {
-    return this.http.post<Trip>(this.baseUrl, formData);
+    return this.http.post<Trip>(this.tripUrl, formData);
   }
 //addtrip returns a new trip in the collection
   getTrip(tripCode: string) : Observable<Trip[]> {
-    return this.http.get<Trip[]>(this.baseUrl + '/' + tripCode);
+    return this.http.get<Trip[]>(this.tripUrl + '/' + tripCode);
   }
 //gettrip by id
   updateTrip(formData: Trip) : Observable<Trip> {
-    return this.http.put<Trip>(this.baseUrl + '/' + formData.code, formData);
+    return this.http.put<Trip>(this.tripUrl + '/' + formData.code, formData);
   }
   private handleError(error:any) : Promise<AuthResponse> {
     console.error("somethinghasgonewrong");
@@ -46,8 +46,9 @@ export class TripDataService {
   }
 
   // Helper method to process both login and register methods
-  private makeAuthAPICall(endpoint: string, user: User): any  {
-    const url: string = `${this.baseUrl}/`;
+  private makeAuthAPICall(urlPath: string, user:User): Promise<AuthResponse>  {
+    const url: string = `${this.baseUrl}/${urlPath}`;
+    return this.http.post(url,user).toPromise().then(res => res as AuthResponse).catch(this.handleError);
     
   }
 }

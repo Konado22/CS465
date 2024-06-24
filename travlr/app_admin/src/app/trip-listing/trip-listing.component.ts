@@ -42,7 +42,7 @@ export class TripListingComponent implements OnInit{
         console.log(this.message);
       },
       error: (error:any) => {
-        console.log("Error: " + error);
+        console.log("Error: " + error.message);
       }
     })
   }
